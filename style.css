@@ -1,5 +1,5 @@
 /* ==========================================================================
-   VALENTINE'S DAY WEBSITE - OPTIMIZED & ORGANIZED STYLES
+   VALENTINE'S DAY WEBSITE - PERSONALIZED & ROMANTIC
    ========================================================================== */
 
 /* ==========================================================================
@@ -106,7 +106,7 @@ img {
 
 .love-note {
     font-size: 28px;
-    font-family:'Dancing Script', cursive;
+    font-family: 'Dancing Script', cursive;
     line-height: 1.7;
     color: #7a2c4d;
     font-weight: 500;
@@ -148,7 +148,7 @@ img {
 }
 
 /* ==========================================================================
-   3. INTRO SCREEN - iOS Premium
+   3. INTRO SCREEN, SLIDESHOW & ROMANTIC MESSAGE
    ========================================================================== */
 #introScreen {
     position: fixed;
@@ -180,26 +180,210 @@ img {
     }
 }
 
-/* ==========================================================================
-   4. MAIN CARD - Premium iOS Style
-   ========================================================================== */
-.card {
-    background: rgba(255, 255, 255, 0.75);
+/* Photo Slideshow Container */
+#photoSlideshow {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, #fff9fc 0%, #fcedf4 100%);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+#photoSlideshow.show {
+    opacity: 1;
+}
+
+.slideshow-container {
+    width: 90%;
+    max-width: 450px;
+    aspect-ratio: 4/5;
+    background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(30px) saturate(180%);
     -webkit-backdrop-filter: blur(30px) saturate(180%);
-    padding: 48px 32px;
-    padding-bottom: max(48px, env(safe-area-inset-bottom));
+    border-radius: 28px;
+    border: 0.5px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 
+        0 30px 60px rgba(122, 44, 77, 0.2),
+        0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+    overflow: hidden;
+    position: relative;
+}
+
+.slideshow-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slideshow-image.active {
+    opacity: 1;
+}
+
+/* Progress bar at bottom */
+.slideshow-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    z-index: 10;
+}
+
+.slideshow-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #e56a92, #d05481);
+    width: 0%;
+    transition: width 2s linear;
+}
+
+/* Romantic Pop-up Message */
+#romanticMessage {
+    position: fixed;
+    inset: 0;
+    background: rgba(30, 10, 20, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 6;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+#romanticMessage.show {
+    opacity: 1;
+}
+
+.message-box {
+    background: rgba(255, 250, 248, 0.98);
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    padding: 40px 32px;
+    border-radius: 24px;
+    width: 85%;
+    max-width: 380px;
+    border: 0.5px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 
+        0 30px 60px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+    text-align: center;
+    animation: iosPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.message-box h2 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 32px;
+    color: #c94f7c;
+    margin: 0 0 20px 0;
+    font-weight: 700;
+}
+
+.message-box p {
+    font-size: 17px;
+    line-height: 1.7;
+    color: rgba(122, 44, 77, 0.9);
+    margin: 0 0 32px 0;
+}
+
+.continue-btn {
+    padding: 16px 48px;
+    border: none;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #e56a92 0%, #d05481 100%);
+    box-shadow: 
+        0 6px 20px rgba(208, 84, 129, 0.35),
+        0 2px 6px rgba(208, 84, 129, 0.2);
+    color: white;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+    letter-spacing: -0.3px;
+    border: 0.5px solid rgba(255, 255, 255, 0.2);
+}
+
+.continue-btn:active {
+    transform: scale(0.95);
+    box-shadow: 
+        0 3px 12px rgba(208, 84, 129, 0.35),
+        0 1px 3px rgba(208, 84, 129, 0.2);
+}
+
+/* ==========================================================================
+   4. MAIN CARD - Romantic with Gradient & Hand-Holding Couple
+   ========================================================================== */
+.card {
+    background: linear-gradient(180deg, 
+        rgba(255, 255, 255, 0.88) 0%, 
+        rgba(255, 250, 252, 0.85) 40%, 
+        rgba(254, 240, 248, 0.82) 100%);
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    padding: 48px 32px 220px 32px;
     max-width: 440px;
     width: 92%;
     border-radius: 24px;
-    border: 0.5px solid rgba(255, 255, 255, 0.8);
+    border: 0.5px solid rgba(255, 255, 255, 0.9);
     box-shadow: 
         0 25px 50px -12px rgba(122, 44, 77, 0.15),
-        0 0 0 1px rgba(255, 255, 255, 0.3) inset;
+        0 0 0 1px rgba(255, 255, 255, 0.4) inset;
     text-align: center;
     position: relative;
     z-index: 2;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    display: none;
+    opacity: 0;
+}
+
+.card.show {
+    display: block;
+    animation: cardFadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes cardFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Romantic couple holding hands at bottom */
+.card::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    background-image: url('Images/couple-hands.png');
+    background-size: contain;
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    opacity: 0.12;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Ensure card content stays above background image */
+.card > * {
+    position: relative;
+    z-index: 1;
 }
 
 .card:active {
@@ -363,13 +547,13 @@ body.prompt-open .card {
 }
 
 /* ==========================================================================
-   7. VISUAL EFFECTS - Hearts & Confetti
+   7. VISUAL EFFECTS - Hearts & Confetti (IMPROVED)
    ========================================================================== */
 
 /* Falling Hearts Container */
 .hearts {
     position: fixed;
-    opacity: 0.6;
+    opacity: 0.7;
     top: 0;
     left: 0;
     width: 100%;
@@ -378,7 +562,7 @@ body.prompt-open .card {
     z-index: 5;
 }
 
-/* Heart Animation Wrappers */
+/* Heart Animation Wrappers - SLOWER & MORE VISIBLE */
 .heart-wrapper {
     position: fixed;
     top: -100px;
@@ -390,6 +574,7 @@ body.prompt-open .card {
 .heart-img {
     display: block;
     animation: sway ease-in-out infinite alternate;
+    filter: drop-shadow(0 2px 8px rgba(255, 0, 80, 0.3));
 }
 
 /* Heart Burst Effect */
@@ -399,7 +584,7 @@ body.prompt-open .card {
     left: 50%;
     pointer-events: none;
     z-index: 1000;
-    animation: heartBurst 1.2s ease-out forwards;
+    animation: heartBurst 1.5s ease-out forwards;
 }
 
 /* Confetti */
@@ -417,25 +602,26 @@ body.prompt-open .card {
    ========================================================================== */
 @keyframes fall {
     to { 
-        transform: translateY(115vh); 
+        transform: translateY(120vh); 
     }
 }
 
 @keyframes sway {
     0% { 
-        transform: translateX(-15px) rotate(-10deg); 
+        transform: translateX(-20px) rotate(-12deg); 
     }
     100% { 
-        transform: translateX(15px) rotate(10deg); 
+        transform: translateX(20px) rotate(12deg); 
     }
 }
 
 @keyframes heartBurst {
     0% {
         transform: translate(-50%, -50%) scale(0);
+        opacity: 1;
     }
     100% {
-        transform: translate(var(--tx), var(--ty)) scale(1.5) rotate(var(--rot));
+        transform: translate(var(--tx), var(--ty)) scale(1.8) rotate(var(--rot));
         opacity: 0;
     }
 }
@@ -480,7 +666,7 @@ body.prompt-open .card {
     width: 100vw !important;
     height: 100vh !important;
     background: rgba(30, 10, 20, 0.6) !important;
-    backdrop-filter: blur(5px) !important;
+    backdrop-filter: blur(20px) !important;
     -webkit-backdrop-filter: blur(20px) !important;
     justify-content: center !important;
     align-items: center !important;
@@ -494,8 +680,7 @@ body.prompt-open .card {
 .prompt-content {
     transform: none !important; 
     position: relative !important;
-    /*background: rgba(255, 255, 255, 0.95) !important;*/
-    background-color: rgba(255, 255, 255, 0.3) !important;
+    background: rgba(255, 255, 255, 0.95) !important;
     backdrop-filter: blur(40px) saturate(180%) !important;
     -webkit-backdrop-filter: blur(40px) saturate(180%) !important;
     padding: 32px 24px !important;
@@ -503,10 +688,9 @@ body.prompt-open .card {
     width: 85% !important;
     max-width: 320px !important;
     border: 0.5px solid rgba(255, 255, 255, 0.8) !important;
-    background-image: url('Images/background.jpg');
-    background-position: center;
-    background-size: cover;
-    box-shadow: 0 25px 50px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.5) inset !important;
+    box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.25),
+        0 0 0 1px rgba(255, 255, 255, 0.5) inset !important;
     text-align: center !important;
     animation: iosPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     z-index: 1000000 !important;
