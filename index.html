@@ -1,433 +1,798 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>My Valentine 💖</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="theme-color" content="#fef5f8">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Dancing+Script:wght@600&family=Caveat:wght@500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-    <!-- ===== VISUAL EFFECTS CONTAINERS ===== -->
-    <div class="hearts"></div>
-    <div class="confetti-container"></div>
-
-    <!-- ===== INTRO SCREEN ===== -->
-    <div id="introScreen">
-        <h1>For A Special Lady ❤️</h1>
-        <p class="textsConfig" style="background: rgba(255, 255, 255, 0.6); padding: 8px 20px; border-radius: 20px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 0.5px solid rgba(255,255,255,0.8);">Tap to begin</p>
-        <button id="enterBtn" onclick="enterSite()">Enter</button>
-    </div>
-
-    <!-- ===== AUDIO FILES ===== -->
-    <audio id="bgMusic" loop>
-        <source src="music.mp3" type="audio/mpeg">
-    </audio>
-
-    <audio id="voiceMessage">
-        <source src="voice.mp3" type="audio/mpeg">
-    </audio>
-
-    <!-- ===== BACK BUTTON ===== -->
-    <button id="backBtn" onclick="goBack()">← Back</button>
-
-    <!-- ===== MAIN CARD ===== -->
-    <div class="card">
-        <h1>Happy Valentine's Day 💕</h1>
-        <p class="intro">This little page is just for you mama. Every word here comes from my heart.</p>
-        <p id="timeTogether"></p>
-
-        <!-- Navigation Buttons -->
-        <div id="navButtons">
-            <div style="height: 1px; background: linear-gradient(90deg, transparent 0%, rgba(201, 79, 124, 0.2) 50%, transparent 100%); margin: 8px 0 20px 0;"></div>
-            <button onclick="showSection('us')" class="animated-btn">Tap to see us</button>
-            <button onclick="unlockLoveLetter()" class="animated-btn">Love Letter 💌</button>
-            <button onclick="showSection('memories')" class="animated-btn">Our memories</button>
-            <button onclick="unlockMessage()" class="animated-btn">A message just for you</button>
-            <button onclick="showSection('distance')" class="animated-btn">Even if you leave...</button>
-            <button onclick="finalScene()" class="animated-btn">One Last Thing...</button>
-        </div>
-
-        <!-- ===== CONTENT SECTIONS ===== -->
-        
-        <!-- Us Section -->
-        <div id="us" class="hidden section">
-            <img src="Images/us.jpg" alt="Us">
-            <div class="sweet-box">
-                <p>Every moment with you feels like destiny ❤️</p>
-            </div>
-        </div>
-
-        <!-- Love Letter Section -->
-        <div id="loveLetter" class="hidden section">
-            <div class="letter-box">
-                <p id="typedLetter"></p>
-            </div>
-        </div>
-
-        <!-- Memories Section -->
-        <div id="memories" class="hidden section">
-            <img src="Images/memory1.jpg" alt="Memory 1">
-            <img src="Images/memory2.jpg" alt="Memory 2">
-        </div>
-
-        <!-- Voice Message Section -->
-        <div id="message" class="hidden section">
-            <button class="voice-btn" onclick="playVoice()">▶ Play My Voice</button>
-            <p class="love-note glow-text">
-                You are my peace. My happiness. My greatest blessing ❤️
-            </p>
-        </div>
-
-        <!-- Distance Section -->
-        <div id="distance" class="hidden section">
-            <div class="sweet-box">
-                <p class="love-note">
-                    They say distance changes feelings.
-                    <br><br>
-                    I think it just proves which ones were real.
-                    <br><br>
-                    So if one day you miss me...
-                    I hope you remember this page.
-                </p>
-            </div>
-        </div>
-
-        <!-- Final Scene Section -->
-        <div id="finalScene" class="hidden section">
-            <div class="sweet-box">
-                <p id="finalText" class="love-note"></p>
-            </div>
-        </div>
-    </div>
-
-    <!-- ===== ERROR TOAST ===== -->
-    <div id="errorToast">Try again, cutie ❤️</div>
-
-    <!-- ===== CUSTOM PROMPT MODAL ===== -->
-    <div id="customPrompt">
-        <div class="prompt-content">
-            <h2 id="promptTitle">Question</h2>
-            <input type="text" id="promptInput" placeholder="Tap here to type...">
-            <div class="prompt-btns">
-                <button class="animated-btn" onclick="submitPrompt()">Submit</button>
-                <button class="animated-btn" style="background: linear-gradient(180deg, #8b3456 0%, #7a2c4d 100%); color: white; border: none;" onclick="closePrompt()">Cancel</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ===== JAVASCRIPT ===== -->
-    <script>
-        // =================================================================
-        // CONFIGURATION
-        // =================================================================
-        const CONFIG = {
-            startDate: "2022-01-01", // Change to your actual date
-            heartInterval: 800,
-            confettiCount: 80,
-            burstHeartCount: 20
-        };
-
-        // =================================================================
-        // HEART SYSTEM
-        // =================================================================
-        function createHeart() {
-            const heartContainer = document.querySelector(".hearts");
-            if (!heartContainer) return;
-
-            const wrapper = document.createElement("div");
-            wrapper.classList.add("heart-wrapper");
-
-            const heart = document.createElement("img");
-            heart.src = "Images/FallingHeart.jpg";
-            heart.classList.add("heart-img");
-
-            const size = Math.random() * 40 + 20;
-            heart.style.width = size + "px";
-            wrapper.style.left = Math.random() * 100 + "vw";
-
-            const fallDuration = Math.random() * 3 + 4;
-            const swayDuration = Math.random() * 1 + 1;
-
-            wrapper.style.animationDuration = `${fallDuration}s`;
-            heart.style.animationDuration = `${swayDuration}s`;
-
-            wrapper.appendChild(heart);
-            heartContainer.appendChild(wrapper);
-
-            setTimeout(() => wrapper.remove(), fallDuration * 1000);
-        }
-
-        function createBurst() {
-            for (let i = 0; i < CONFIG.burstHeartCount; i++) {
-                const burst = document.createElement("img");
-                burst.src = "Images/FallingHeart.jpg";
-                burst.classList.add("burst-heart");
-
-                const angle = Math.random() * Math.PI * 2;
-                const distance = Math.random() * 200 + 100;
-                const tx = Math.cos(angle) * distance + "px";
-                const ty = Math.sin(angle) * distance + "px";
-                const rot = Math.random() * 360 + "deg";
-
-                burst.style.setProperty('--tx', tx);
-                burst.style.setProperty('--ty', ty);
-                burst.style.setProperty('--rot', rot);
-                burst.style.width = (Math.random() * 30 + 20) + "px";
-
-                document.body.appendChild(burst);
-                setTimeout(() => burst.remove(), 1200);
-            }
-        }
-
-        // =================================================================
-        // CONFETTI SYSTEM
-        // =================================================================
-        function launchConfetti() {
-            const container = document.querySelector(".confetti-container");
-            for (let i = 0; i < CONFIG.confettiCount; i++) {
-                const conf = document.createElement("div");
-                conf.classList.add("confetti");
-                conf.style.left = Math.random() * 100 + "vw";
-                conf.style.backgroundColor = Math.random() > 0.5 ? "#ff004f" : "#ff5fa2";
-                conf.style.animationDuration = (Math.random() * 3 + 2) + "s";
-                container.appendChild(conf);
-                setTimeout(() => conf.remove(), 5000);
-            }
-        }
-
-        // =================================================================
-        // TYPEWRITER EFFECT
-        // =================================================================
-        function typeLetter(text, elementId, speed = 40) {
-            let i = 0;
-            const el = document.getElementById(elementId);
-            el.innerHTML = "";
-
-            function typing() {
-                if (i < text.length) {
-                    el.innerHTML += text.charAt(i);
-                    i++;
-                    setTimeout(typing, speed);
-                }
-            }
-            typing();
-        }
-
-        // =================================================================
-        // TIME CALCULATOR
-        // =================================================================
-        function updateTime() {
-            const startDate = new Date(CONFIG.startDate);
-            const now = new Date();
-            const diff = now - startDate;
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-
-            document.getElementById("timeTogether").innerText =
-                `It's been ${days} days since we started this story ❤️`;
-        }
-
-        // =================================================================
-        // SITE ENTRY
-        // =================================================================
-        function enterSite() {
-            // Fullscreen request
-            const elem = document.documentElement;
-            if (elem.requestFullscreen) {
-                elem.requestFullscreen();
-            } else if (elem.webkitRequestFullscreen) {
-                elem.webkitRequestFullscreen();
-            } else if (elem.msRequestFullscreen) {
-                elem.msRequestFullscreen();
-            }
-
-            createBurst();
-            document.getElementById("introScreen").style.display = "none";
-            document.getElementById("bgMusic").play();
-        }
-
-        // =================================================================
-        // NAVIGATION
-        // =================================================================
-        function showSection(id) {
-            document.getElementById("navButtons").style.display = "none";
-            document.getElementById("backBtn").style.display = "block";
-
-            document.querySelectorAll(".section").forEach(sec => {
-                sec.classList.remove("show");
-                sec.style.display = "none";
-            });
-
-            const target = document.getElementById(id);
-            target.style.display = "block";
-            setTimeout(() => target.classList.add("show"), 10);
-        }
-
-        function goBack() {
-            document.querySelectorAll(".section").forEach(sec => {
-                sec.classList.remove("show");
-                sec.style.display = "none";
-            });
-
-            document.getElementById("navButtons").style.display = "block";
-            document.getElementById("backBtn").style.display = "none";
-
-            // Reset background
-            document.body.style.background = "";
-            document.body.style.transition = "background 1s ease";
-        }
-
-        // =================================================================
-        // FINAL SCENE
-        // =================================================================
-        function finalScene() {
-            showSection("finalScene");
-
-            const text = `If one day...
-months from now...
-
-you randomly think of me —
-
-I hope you smile.
-
-Not because you regret anything.
-Not because you miss me painfully.
-
-But because you experienced something real.
-
-And real things
-don't fade.
-
-Goodbye...
-but never forgotten. ❤️`;
-
-            typeLetter(text, "finalText", 40);
-
-            document.body.style.transition = "background 3s ease";
-            document.body.style.background = "linear-gradient(180deg, #2b1c24, #1a1015)";
-        }
-
-        // =================================================================
-        // PROMPT MODAL SYSTEM
-        // =================================================================
-        let currentUnlockType = "";
-
-        function openPrompt(question, type) {
-            currentUnlockType = type;
-            document.getElementById("promptTitle").innerText = question;
-            document.getElementById("promptInput").value = "";
-
-            const modal = document.getElementById("customPrompt");
-            document.body.classList.add("prompt-open");
-
-            modal.style.display = "flex";
-            modal.style.opacity = "0";
-            setTimeout(() => modal.style.opacity = "1", 10);
-        }
-
-        function closePrompt() {
-            const modal = document.getElementById("customPrompt");
-            modal.style.opacity = "0";
-            document.body.classList.remove("prompt-open");
-            setTimeout(() => modal.style.display = "none", 400);
-        }
-
-        function submitPrompt() {
-            const answer = document.getElementById("promptInput").value.toLowerCase().trim();
-
-            if (currentUnlockType === "letter") {
-                if (answer === "instagram") {
-                    showSection("loveLetter");
-                    launchConfetti();
-
-                    const letterText = `My Love,
-
-Even if you're miles away...
-Even if the world shifts us in different directions...
-
-What I felt was real.
-And real things don't disappear just because distance exists.
-
-You changed me.
-You made me softer.
-You made me better.
-
-And wherever you go...
-A piece of my heart walks with you.
-
-Always. ❤️`;
-
-                    typeLetter(letterText, "typedLetter", 35);
-                    closePrompt();
-                } else {
-                    triggerErrorEffect();
-                    showError("Try again ❤️");
-                }
-            } else if (currentUnlockType === "message") {
-                if (answer === "my man") {
-                    showSection("message");
-                    launchConfetti();
-                    closePrompt();
-                } else {
-                    triggerErrorEffect();
-                    showError("Wrong answer, cutie 😘");
-                }
-            }
-        }
-
-        function unlockLoveLetter() {
-            openPrompt("Where did we first talk? 💖", "letter");
-        }
-
-        function unlockMessage() {
-            openPrompt("Who is the best boyfriend in the world? 💕", "message");
-        }
-
-        // =================================================================
-        // ERROR HANDLING
-        // =================================================================
-        function showError(message) {
-            const toast = document.getElementById("errorToast");
-            toast.innerText = message;
-            toast.classList.add("show");
-            setTimeout(() => toast.classList.remove("show"), 2500);
-        }
-
-        function triggerErrorEffect() {
-            const inputField = document.getElementById("promptInput");
-            inputField.classList.add("error-glow");
-            setTimeout(() => inputField.classList.remove("error-glow"), 500);
-        }
-
-        // =================================================================
-        // VOICE PLAYER
-        // =================================================================
-        function playVoice() {
-            document.getElementById("voiceMessage").play();
-        }
-
-        // 3D card tilt removed for better mobile performance
-
-        // =================================================================
-        // ENTER KEY SUPPORT
-        // =================================================================
-        document.getElementById("promptInput").addEventListener("keypress", function(event) {
-            if (event.key === "Enter") {
-                submitPrompt();
-            }
-        });
-
-        // =================================================================
-        // INITIALIZATION
-        // =================================================================
-        window.onload = function() {
-            updateTime();
-            setInterval(createHeart, CONFIG.heartInterval);
-        };
-    </script>
-</body>
-</html>
+/* ==========================================================================
+   VALENTINE'S DAY WEBSITE - PERSONALIZED & ROMANTIC
+   ========================================================================== */
+
+/* ==========================================================================
+   1. FONTS & GLOBAL STYLES
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500&display=swap');
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Playfair Display', serif;
+    background: linear-gradient(180deg, #fef5f8 0%, #fdeef4 50%, #fce4ed 100%);
+    background-attachment: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    position: relative;
+}
+
+/* Add subtle texture overlay */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 20% 50%, rgba(229, 106, 146, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(201, 79, 124, 0.03) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+h1 {
+    background: linear-gradient(135deg, #e56a92 0%, #c94f7c 50%, #a83d66 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-family: 'Dancing Script', cursive;
+    font-size: 48px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin: 0 0 16px 0;
+    line-height: 1.2;
+}
+
+img {
+    width: 100%;
+    border-radius: 18px;
+    margin-bottom: 20px;
+    box-shadow: 
+        0 12px 35px rgba(0, 0, 0, 0.12),
+        0 2px 6px rgba(0, 0, 0, 0.08);
+    border: 0.5px solid rgba(255, 255, 255, 0.6);
+}
+
+/* ==========================================================================
+   2. TEXT STYLES & COLORS - iOS Premium Typography
+   ========================================================================== */
+.intro,
+.textsConfig,
+#timeTogether,
+.prompt-content h2 {
+    color: #7a2c4d;
+    font-style: normal;
+}
+
+.intro {
+    margin-bottom: 32px;
+    margin-top: 12px;
+    font-size: 16px;
+    line-height: 1.6;
+    font-weight: 500;
+    color: rgba(122, 44, 77, 0.85);
+    background: rgba(255, 248, 246, 0.5);
+    padding: 16px 20px;
+    border-radius: 12px;
+    border: 0.5px solid rgba(201, 79, 124, 0.1);
+}
+
+.textsConfig {
+    margin-bottom: 16px;
+    font-size: 15px;
+    opacity: 0.7;
+    font-weight: 500;
+    font-style: italic;
+}
+
+#timeTogether {
+    font-size: 14px;
+    margin: 24px 0 32px 0;
+    font-weight: 600;
+    opacity: 0.75;
+    padding: 12px 16px;
+    background: linear-gradient(135deg, rgba(229, 106, 146, 0.08) 0%, rgba(201, 79, 124, 0.08) 100%);
+    border-radius: 10px;
+    border-left: 3px solid #e56a92;
+}
+
+.love-note {
+    font-size: 28px;
+    font-family: 'Dancing Script', cursive;
+    line-height: 1.7;
+    color: #7a2c4d;
+    font-weight: 500;
+    letter-spacing: -0.2px;
+}
+
+.glow-text {
+    text-shadow: 0 0 25px rgba(242, 34, 121, 0.25);
+    font-weight: 600;
+}
+
+.letter-box {
+    background: rgba(255, 250, 248, 0.98);
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    padding: 28px;
+    border-radius: 20px;
+    color: #7a2c4d;
+    box-shadow: 
+        0 10px 40px rgba(201, 79, 124, 0.12),
+        0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+    border: 0.5px solid rgba(229, 106, 146, 0.2);
+    font-family: 'Caveat', cursive;
+    font-size: 20px;
+    line-height: 1.7;
+}
+
+.sweet-box {
+    background: rgba(255, 250, 248, 0.98);
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    padding: 28px;
+    border-radius: 20px;
+    color: #7a2c4d;
+    box-shadow: 
+        0 10px 40px rgba(201, 79, 124, 0.12),
+        0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+    border: 0.5px solid rgba(229, 106, 146, 0.2);
+}
+
+/* ==========================================================================
+   3. INTRO SCREEN, SLIDESHOW & ROMANTIC MESSAGE
+   ========================================================================== */
+#introScreen {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, #fff9fc 0%, #fcedf4 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 4;
+    text-align: center;
+    padding: 20px;
+}
+
+#introScreen h1 {
+    font-size: 38px;
+    margin-bottom: 20px;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Photo Slideshow Container */
+#photoSlideshow {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, #fff9fc 0%, #fcedf4 100%);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+#photoSlideshow.show {
+    opacity: 1;
+}
+
+.slideshow-container {
+    width: 90%;
+    max-width: 450px;
+    aspect-ratio: 4/5;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    border-radius: 28px;
+    border: 0.5px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 
+        0 30px 60px rgba(122, 44, 77, 0.2),
+        0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+    overflow: hidden;
+    position: relative;
+}
+
+.slideshow-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slideshow-image.active {
+    opacity: 1;
+}
+
+/* Progress bar at bottom */
+.slideshow-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    z-index: 10;
+}
+
+.slideshow-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #e56a92, #d05481);
+    width: 0%;
+    transition: width 2s linear;
+}
+
+/* Romantic Pop-up Message */
+#romanticMessage {
+    position: fixed;
+    inset: 0;
+    background: rgba(30, 10, 20, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 6;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+#romanticMessage.show {
+    opacity: 1;
+}
+
+.message-box {
+    background: rgba(255, 250, 248, 0.98);
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    padding: 40px 32px;
+    border-radius: 24px;
+    width: 85%;
+    max-width: 380px;
+    border: 0.5px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 
+        0 30px 60px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+    text-align: center;
+    animation: iosPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.message-box h2 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 32px;
+    color: #c94f7c;
+    margin: 0 0 20px 0;
+    font-weight: 700;
+}
+
+.message-box p {
+    font-size: 17px;
+    line-height: 1.7;
+    color: rgba(122, 44, 77, 0.9);
+    margin: 0 0 32px 0;
+}
+
+.continue-btn {
+    padding: 16px 48px;
+    border: none;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #e56a92 0%, #d05481 100%);
+    box-shadow: 
+        0 6px 20px rgba(208, 84, 129, 0.35),
+        0 2px 6px rgba(208, 84, 129, 0.2);
+    color: white;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+    letter-spacing: -0.3px;
+    border: 0.5px solid rgba(255, 255, 255, 0.2);
+}
+
+.continue-btn:active {
+    transform: scale(0.95);
+    box-shadow: 
+        0 3px 12px rgba(208, 84, 129, 0.35),
+        0 1px 3px rgba(208, 84, 129, 0.2);
+}
+
+/* ==========================================================================
+   4. MAIN CARD - Romantic with Gradient & Hand-Holding Couple
+   ========================================================================== */
+.card {
+    background: linear-gradient(180deg, 
+        rgba(255, 255, 255, 0.88) 0%, 
+        rgba(255, 250, 252, 0.85) 40%, 
+        rgba(254, 240, 248, 0.82) 100%);
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    padding: 48px 32px 220px 32px;
+    max-width: 440px;
+    width: 92%;
+    border-radius: 24px;
+    border: 0.5px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 
+        0 25px 50px -12px rgba(122, 44, 77, 0.15),
+        0 0 0 1px rgba(255, 255, 255, 0.4) inset;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    display: none;
+    opacity: 0;
+}
+
+.card.show {
+    display: block;
+    animation: cardFadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes cardFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Romantic couple holding hands at bottom */
+.card::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    background-image: url('Images/couple-hands.png');
+    background-size: contain;
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    opacity: 0.12;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Ensure card content stays above background image */
+.card > * {
+    position: relative;
+    z-index: 1;
+}
+
+.card:active {
+    transform: scale(0.98);
+}
+
+/* Disable card interactions when prompt is open */
+body.prompt-open .card {
+    pointer-events: none;
+}
+
+/* ==========================================================================
+   5. BUTTONS - Premium iOS Style
+   ========================================================================== */
+
+/* Primary Buttons (Enter & Back) */
+#enterBtn,  
+#backBtn {
+    padding: 18px 36px;
+    border: none;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #e56a92 0%, #d05481 100%);
+    box-shadow: 
+        0 6px 20px rgba(208, 84, 129, 0.35),
+        0 2px 6px rgba(208, 84, 129, 0.2);
+    color: white;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+    letter-spacing: -0.3px;
+    border: 0.5px solid rgba(255, 255, 255, 0.2);
+}
+
+#enterBtn {
+    animation: gentlePulse 2s ease-in-out infinite;
+}
+
+@keyframes gentlePulse {
+    0%, 100% { 
+        transform: scale(1);
+        box-shadow: 
+            0 6px 20px rgba(208, 84, 129, 0.35),
+            0 2px 6px rgba(208, 84, 129, 0.2);
+    }
+    50% { 
+        transform: scale(1.02);
+        box-shadow: 
+            0 8px 25px rgba(208, 84, 129, 0.4),
+            0 3px 8px rgba(208, 84, 129, 0.25);
+    }
+}
+
+#enterBtn:active,
+#backBtn:active {
+    transform: scale(0.95);
+    box-shadow: 
+        0 3px 12px rgba(208, 84, 129, 0.35),
+        0 1px 3px rgba(208, 84, 129, 0.2);
+    animation: none;
+}
+
+#backBtn {
+    position: fixed;
+    bottom: max(30px, env(safe-area-inset-bottom, 30px));
+    right: 20px;
+    display: none;
+    z-index: 9999;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 12px 24px;
+    font-size: 15px;
+}
+
+/* iOS-Style Glass Buttons */
+.animated-btn {
+    width: 100%;
+    margin: 6px 0;
+    padding: 18px 0;
+    background: rgba(255, 255, 255, 0.75); 
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 0.5px solid rgba(255, 255, 255, 0.8);
+    border-radius: 16px;
+    color: #9c3b61;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.06),
+        0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+
+.animated-btn:active {
+    transform: scale(0.97);
+    background: rgba(240, 240, 245, 0.85);
+    box-shadow: 
+        0 2px 6px rgba(0, 0, 0, 0.08),
+        0 0 0 1px rgba(255, 255, 255, 0.3) inset;
+}
+
+/* Voice Button */
+.voice-btn {
+    margin-top: 24px;
+    margin-bottom: 20px;
+    padding: 16px 32px;
+    border: none;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #8b3456 0%, #7a2c4d 100%);
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+    box-shadow: 
+        0 6px 20px rgba(122, 44, 77, 0.3),
+        0 2px 6px rgba(122, 44, 77, 0.2);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    letter-spacing: -0.2px;
+    border: 0.5px solid rgba(255, 255, 255, 0.15);
+}
+
+.voice-btn:active {
+    transform: scale(0.96);
+    box-shadow: 
+        0 3px 12px rgba(122, 44, 77, 0.3),
+        0 1px 3px rgba(122, 44, 77, 0.2);
+}
+
+/* ==========================================================================
+   6. SECTIONS & ANIMATIONS - iOS Smooth Transitions
+   ========================================================================== */
+.hidden {
+    display: none;
+}
+
+.section {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+    filter: blur(0);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.section.show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+}
+
+/* Section content spacing */
+.section > *:first-child {
+    margin-top: 0;
+}
+
+.section > *:last-child {
+    margin-bottom: 0;
+}
+
+/* ==========================================================================
+   7. VISUAL EFFECTS - Hearts & Confetti (IMPROVED)
+   ========================================================================== */
+
+/* Falling Hearts Container */
+.hearts {
+    position: fixed;
+    opacity: 0.7;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+}
+
+/* Heart Animation Wrappers - SLOWER & MORE VISIBLE */
+.heart-wrapper {
+    position: fixed;
+    top: -100px;
+    z-index: 5;
+    pointer-events: none;
+    animation: fall linear forwards;
+}
+
+.heart-img {
+    display: block;
+    animation: sway ease-in-out infinite alternate;
+    filter: drop-shadow(0 2px 8px rgba(255, 0, 80, 0.3));
+}
+
+/* Heart Burst Effect */
+.burst-heart {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    pointer-events: none;
+    z-index: 1000;
+    animation: heartBurst 1.5s ease-out forwards;
+}
+
+/* Confetti */
+.confetti {
+    position: fixed;
+    top: -10px;
+    width: 8px;
+    height: 12px;
+    animation: confettiFall linear forwards;
+    z-index: 999;
+}
+
+/* ==========================================================================
+   8. KEYFRAME ANIMATIONS
+   ========================================================================== */
+@keyframes fall {
+    to { 
+        transform: translateY(120vh); 
+    }
+}
+
+@keyframes sway {
+    0% { 
+        transform: translateX(-20px) rotate(-12deg); 
+    }
+    100% { 
+        transform: translateX(20px) rotate(12deg); 
+    }
+}
+
+@keyframes heartBurst {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--tx), var(--ty)) scale(1.8) rotate(var(--rot));
+        opacity: 0;
+    }
+}
+
+@keyframes confettiFall {
+    to {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+@keyframes iosPop {
+    0% { 
+        transform: scale(0.85); 
+        opacity: 0; 
+    }
+    100% { 
+        transform: scale(1); 
+        opacity: 1; 
+    }
+}
+
+@keyframes softPulse {
+    0% { 
+        background-color: #fff8f6; 
+    }
+    100% { 
+        background-color: #fdeaf2; 
+    }
+}
+
+/* ==========================================================================
+   9. CUSTOM PROMPT MODAL - iOS Premium Style
+   ========================================================================== */
+#customPrompt {
+    display: none;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: rgba(30, 10, 20, 0.6) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    justify-content: center !important;
+    align-items: center !important;
+    z-index: 999999 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.prompt-content {
+    transform: none !important; 
+    position: relative !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(40px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(40px) saturate(180%) !important;
+    padding: 32px 24px !important;
+    border-radius: 20px !important;
+    width: 85% !important;
+    max-width: 320px !important;
+    border: 0.5px solid rgba(255, 255, 255, 0.8) !important;
+    box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.25),
+        0 0 0 1px rgba(255, 255, 255, 0.5) inset !important;
+    text-align: center !important;
+    animation: iosPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 1000000 !important;
+}
+
+.prompt-content h2 {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 24px;
+    font-size: 22px;
+    letter-spacing: -0.5px;
+}
+
+/* iOS-Style Input Field */
+#promptInput {
+    width: 100%;
+    padding: 14px 16px;
+    margin-bottom: 24px;
+    background: rgba(242, 242, 247, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    border-radius: 12px;
+    font-size: 17px;
+    text-align: center;
+    color: #333;
+    outline: none;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#promptInput:focus {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1.5px solid #d05481;
+    box-shadow: 0 0 0 4px rgba(208, 84, 129, 0.1);
+}
+
+#promptInput::placeholder {
+    color: rgba(60, 60, 67, 0.3);
+}
+
+/* Error Effect */
+#promptInput.error-glow {
+    border: 1.5px solid #ff3b30 !important;
+    box-shadow: 0 0 0 4px rgba(255, 59, 48, 0.1);
+    animation: shake 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    75% { transform: translateX(8px); }
+}
+
+/* Modal Buttons Container */
+.prompt-btns {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.prompt-btns button {
+    flex: 1;
+    border-radius: 12px;
+    padding: 14px 0;
+    font-size: 17px;
+    margin: 0;
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.08),
+        0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+}
+
+/* ==========================================================================
+   10. ERROR TOAST NOTIFICATION - iOS Premium Style
+   ========================================================================== */
+#errorToast {
+    position: fixed;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(122, 44, 77, 0.95);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    color: white;
+    padding: 14px 28px;
+    border-radius: 12px;
+    border: 0.5px solid rgba(255, 255, 255, 0.2);
+    z-index: 1000000;
+    font-style: normal;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+    box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.25),
+        0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    opacity: 0;
+}
+
+#errorToast.show {
+    top: 50px;
+    opacity: 1;
+}
