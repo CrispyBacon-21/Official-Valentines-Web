@@ -371,13 +371,13 @@ img {
     left: 0;
     right: 0;
     height: 200px;
-    background-image: url('Images/couple-hands.png');
+    background-image: url('Images/HoldingHands.png');
     background-size: contain;
     background-position: center bottom;
     background-repeat: no-repeat;
     opacity: 0.12;
     pointer-events: none;
-    z-index: 0;
+    z-index: 3;
 }
 
 /* Ensure card content stays above background image */
