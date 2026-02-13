@@ -75,7 +75,7 @@
         <div class="message-box">
             <h2>Before We Begin... 💕</h2>
             <p>Every smile in those photos… every quiet moment, every glow in your eyes. They tell the story of you.</p>
-            <p>The girl who lived, who laughed, who grew. The girl who didn’t even know she was walking toward something beautiful. They were chapters of your story. Beautiful pieces of the girl I fell for. And somehow… every single one of them led you here.</p>
+            <p>The girl who lived, who laughed, who grew. The girl who didn't even know she was walking toward something beautiful. They were chapters of your story. Beautiful pieces of the girl I fell for. And somehow… every single one of them led you here.</p>
             <p>To us. To something that feels like it was always meant to be. This page isn't just a gift, mama. It's my heart, written in code and wrapped in love, just for you. ❤️</p>
             <button class="continue-btn" onclick="showMainCard()">Continue</button>
         </div>
@@ -447,16 +447,16 @@ But because you remember
 that what we shared was real.
 
 And real things…
-don’t just fade away.
+don't just fade away.
 
 They stay.
 Quietly. Gently.
 Somewhere in the heart.
 
 Goodbye for now.
-And if it’s God’s will…
+And if it's God's will…
 maybe one day,
-we’ll find our way back to each other again.`;
+we'll find our way back to each other again.`;
 
             typeLetter(text, "finalText", 40);
 
@@ -493,36 +493,35 @@ we’ll find our way back to each other again.`;
             const answer = document.getElementById("promptInput").value.toLowerCase().trim();
 
             if (currentUnlockType === "letter") {
-                if (answer === "instagram") {
+                if (answer === "2008j&d2012") {
                     showSection("loveLetter");
                     launchConfetti();
 
-                    const letterText = `
-                    My Love,
+                    const letterText = `My Love,
 
 I knew this day would come eventually,
 but it still feels surreal.
-Knowing I won’t be seeing you as often for a while doesn’t sit easy with me.
+Knowing I won't be seeing you as often for a while doesn't sit easy with me.
 
 I can only imagine how hard it was to leave your friends and loved ones behind.
-But more than anything, I’m proud of you.
-Proud that you’re brave enough to chase something bigger than comfort.
-Proud that you’re strong enough to step into a new chapter of your life.
+But more than anything, I'm proud of you.
+Proud that you're brave enough to chase something bigger than comfort.
+Proud that you're strong enough to step into a new chapter of your life.
 
-I won’t pretend I’m not scared.
+I won't pretend I'm not scared.
 Scared of distance.
 Scared of time.
 Scared of the silence that might try to grow between us.
 
-But fear doesn’t get to decide our story.
+But fear doesn't get to decide our story.
 
-I don’t know exactly what the future holds for us.
-I don’t know how long it will be until we see each other again.
-What I do know is that what I feel for you isn’t ordinary.
-It’s not something I can just replace or ignore.
+I don't know exactly what the future holds for us.
+I don't know how long it will be until we see each other again.
+What I do know is that what I feel for you isn't ordinary.
+It's not something I can just replace or ignore.
 
-Even when things didn’t always work in our favor,
-even when life didn’t give us enough time to fully blossom into everything we could be,
+Even when things didn't always work in our favor,
+even when life didn't give us enough time to fully blossom into everything we could be,
 what we built was real.
 
 You matter to me.
@@ -530,18 +529,18 @@ Not just as a memory.
 Not just as a chapter.
 But as someone I still see in my future.
 
-I’m not here to hold you back.
-I’m here to grow with you, even if that growth happens miles apart for now.
+I'm not here to hold you back.
+I'm here to grow with you, even if that growth happens miles apart for now.
 If long distance is the test, then let it make us stronger, not strangers.
 
 I believe if two people are meant to build something real,
 distance is just a season, not the ending.
 
 So go chase your dreams.
-Go become everything you’re meant to be.
-And while you’re doing that, know this:
+Go become everything you're meant to be.
+And while you're doing that, know this:
 
-I’m still here.
+I'm still here.
 Choosing you.
 Believing in us.
 
@@ -551,14 +550,14 @@ Thank you for loving me.
 Thank you for the memories.
 And thank you for being someone worth fighting for.❤️`;
 
-                    typeLetter(letterText, "typedLetter", 35);
+                    document.getElementById("typedLetter").innerHTML = letterText.replace(/\n/g, '<br>');
                     closePrompt();
                 } else {
                     triggerErrorEffect();
                     showError("Try again ❤️");
                 }
             } else if (currentUnlockType === "message") {
-                if (answer === "my man") {
+                if (answer === "2008j&d2012") {
                     showSection("message");
                     launchConfetti();
                     closePrompt();
@@ -570,11 +569,11 @@ And thank you for being someone worth fighting for.❤️`;
         }
 
         function unlockLoveLetter() {
-            openPrompt("Where did we first talk? 💖", "letter");
+            openPrompt("???", "letter");
         }
 
         function unlockMessage() {
-            openPrompt("Who is the best boyfriend in the world? 💕", "message");
+            openPrompt("???", "message");
         }
 
         // =================================================================
@@ -597,7 +596,19 @@ And thank you for being someone worth fighting for.❤️`;
         // VOICE PLAYER
         // =================================================================
         function playVoice() {
-            document.getElementById("voiceMessage").play();
+            const voiceMsg = document.getElementById("voiceMessage");
+            const bgMusic = document.getElementById("bgMusic");
+            
+            // Lower background music volume when voice message starts
+            bgMusic.volume = 0.2;
+            
+            // Play voice message
+            voiceMsg.play();
+            
+            // Restore background music volume when voice message ends
+            voiceMsg.onended = function() {
+                bgMusic.volume = 1.0;
+            };
         }
 
         // =================================================================
