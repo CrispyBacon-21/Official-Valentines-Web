@@ -130,8 +130,8 @@ img {
         0 0 0 1px rgba(255, 255, 255, 0.6) inset;
     border: 0.5px solid rgba(229, 106, 146, 0.2);
     font-family: 'Caveat', cursive;
-    font-size: 20px;
-    line-height: 1.7;
+    font-size: 24px;
+    line-height: 2;
 }
 
 .sweet-box {
