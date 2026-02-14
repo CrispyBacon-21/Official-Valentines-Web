@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Valentine 💖</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#fef5f8">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Dancing+Script:wght@600&family=Caveat:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- ===== VISUAL EFFECTS CONTAINERS ===== -->
+    <div class="hearts"></div>
+    <div class="confetti-container"></div>
+
+    <!-- ===== INTRO SCREEN ===== -->
+    <div id="introScreen">
+        <h1>For A Special Girl ❤️</h1>
+        <p class="textsConfig" style="background: rgba(255, 255, 255, 0.6); padding: 8px 20px; border-radius: 20px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 0.5px solid rgba(255,255,255,0.8);">Tap to begin</p>
+        <button id="enterBtn" onclick="startExperience()">Enter</button>
+    </div>
+
+    <!-- ===== PHOTO SLIDESHOW (38 PHOTOS) ===== -->
+    <div id="photoSlideshow">
+        <div class="slideshow-container">
+            <img class="slideshow-image active" src="Images/SlideShowPictures/1.jpg" alt="Memory 1">
+            <img class="slideshow-image" src="Images/SlideShowPictures/2.jpg" alt="Memory 2">
+            <img class="slideshow-image" src="Images/SlideShowPictures/3.jpg" alt="Memory 3">
+            <img class="slideshow-image" src="Images/SlideShowPictures/4.jpg" alt="Memory 4">
+            <img class="slideshow-image" src="Images/SlideShowPictures/5.jpg" alt="Memory 5">
+            <img class="slideshow-image" src="Images/SlideShowPictures/6.jpg" alt="Memory 6">
+            <img class="slideshow-image" src="Images/SlideShowPictures/7.jpg" alt="Memory 7">
+            <img class="slideshow-image" src="Images/SlideShowPictures/8.jpg" alt="Memory 8">
+            <img class="slideshow-image" src="Images/SlideShowPictures/9.jpg" alt="Memory 9">
+            <img class="slideshow-image" src="Images/SlideShowPictures/10.jpg" alt="Memory 10">
+            <img class="slideshow-image" src="Images/SlideShowPictures/11.jpg" alt="Memory 11">
+            <img class="slideshow-image" src="Images/SlideShowPictures/12.jpg" alt="Memory 12">
+            <img class="slideshow-image" src="Images/SlideShowPictures/13.jpg" alt="Memory 13">
+            <img class="slideshow-image" src="Images/SlideShowPictures/14.jpg" alt="Memory 14">
+            <img class="slideshow-image" src="Images/SlideShowPictures/15.jpg" alt="Memory 15">
+            <img class="slideshow-image" src="Images/SlideShowPictures/16.jpg" alt="Memory 16">
+            <img class="slideshow-image" src="Images/SlideShowPictures/17.jpg" alt="Memory 17">
+            <img class="slideshow-image" src="Images/SlideShowPictures/18.jpg" alt="Memory 18">
+            <img class="slideshow-image" src="Images/SlideShowPictures/19.jpg" alt="Memory 19">
+            <img class="slideshow-image" src="Images/SlideShowPictures/20.jpg" alt="Memory 20">
+            <img class="slideshow-image" src="Images/SlideShowPictures/21.jpg" alt="Memory 21">
+            <img class="slideshow-image" src="Images/SlideShowPictures/22.jpg" alt="Memory 22">
+            <img class="slideshow-image" src="Images/SlideShowPictures/23.jpg" alt="Memory 23">
+            <img class="slideshow-image" src="Images/SlideShowPictures/24.jpg" alt="Memory 24">
+            <img class="slideshow-image" src="Images/SlideShowPictures/25.jpg" alt="Memory 25">
+            <img class="slideshow-image" src="Images/SlideShowPictures/26.jpg" alt="Memory 26">
+            <img class="slideshow-image" src="Images/SlideShowPictures/27.jpg" alt="Memory 27">
+            <img class="slideshow-image" src="Images/SlideShowPictures/28.jpg" alt="Memory 28">
+            <img class="slideshow-image" src="Images/SlideShowPictures/29.jpg" alt="Memory 29">
+            <img class="slideshow-image" src="Images/SlideShowPictures/30.jpg" alt="Memory 30">
+            <img class="slideshow-image" src="Images/SlideShowPictures/31.jpg" alt="Memory 31">
+            <img class="slideshow-image" src="Images/SlideShowPictures/32.jpg" alt="Memory 32">
+            <img class="slideshow-image" src="Images/SlideShowPictures/33.jpg" alt="Memory 33">
+            <img class="slideshow-image" src="Images/SlideShowPictures/34.jpg" alt="Memory 34">
+            <img class="slideshow-image" src="Images/SlideShowPictures/35.jpg" alt="Memory 35">
+            <img class="slideshow-image" src="Images/SlideShowPictures/36.jpg" alt="Memory 36">
+            <img class="slideshow-image" src="Images/SlideShowPictures/37.jpg" alt="Memory 37">
+            <img class="slideshow-image" src="Images/SlideShowPictures/38.jpg" alt="Memory 38">
+            <div class="slideshow-progress">
+                <div class="slideshow-progress-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== ROMANTIC MESSAGE POP-UP ===== -->
+    <div id="romanticMessage">
+        <div class="message-box">
+            <h2>Before We Begin... 💕</h2>
+            <p>Every smile in those photos… every quiet moment, every glow in your eyes. They tell the story of you.</p>
+            <p>The girl who lived, who laughed, who grew. The girl who didn't even know she was walking toward something beautiful. They were chapters of your story. Beautiful pieces of the girl I fell for. And somehow… every single one of them led you here.</p>
+            <p>To us. To something that feels like it was always meant to be. This page isn't just a gift, mama. It's my heart, written in code and wrapped in love, just for you. ❤️</p>
+            <button class="continue-btn" onclick="showMainCard()">Continue</button>
+        </div>
+    </div>
+
+    <!-- ===== AUDIO FILES ===== -->
+    <audio id="bgMusic" loop>
+        <source src="NeedYouBaby.mp3" type="audio/mpeg">
+    </audio>
+
+    <audio id="voiceMessage">
+        <source src="Voice.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- ===== BACK BUTTON ===== -->
+    <button id="backBtn" onclick="goBack()">← Back</button>
+
+    <!-- ===== MAIN CARD ===== -->
+    <div class="card">
+        <h1>Happy Valentine's Day 💕</h1>
+        <p class="intro">This little page is just for you mama. Every word here comes from my heart.</p>
+        <p id="timeTogether"></p>
+
+        <!-- Navigation Buttons -->
+        <div id="navButtons">
+            <div style="height: 1px; background: linear-gradient(90deg, transparent 0%, rgba(201, 79, 124, 0.2) 50%, transparent 100%); margin: 8px 0 20px 0;"></div>
+            <button onclick="showSection('us')" class="animated-btn">Tap to see us</button>
+            <button onclick="unlockLoveLetter()" class="animated-btn">Love Letter 💌</button>
+            <button onclick="showSection('memories')" class="animated-btn">Our memories</button>
+            <button onclick="unlockMessage()" class="animated-btn">A message just for you</button>
+            <button onclick="showSection('distance')" class="animated-btn">Even if you leave...</button>
+            <button onclick="finalScene()" class="animated-btn">One Last Thing...</button>
+        </div>
+
+        <!-- ===== CONTENT SECTIONS ===== -->
+        
+        <!-- Us Section -->
+        <div id="us" class="hidden section">
+            <img src="Images/Memories/us.jpg" alt="Us">
+            <div class="sweet-box">
+                <p>Every moment with you felt like destiny ❤️</p>
+            </div>
+        </div>
+
+        <!-- Love Letter Section -->
+        <div id="loveLetter" class="hidden section">
+            <div class="letter-box">
+                <p id="typedLetter"></p>
+            </div>  
+        </div>
+
+        <!-- Memories Section -->
+        <div id="memories" class="hidden section">
+            <img src="Images/Memories/1.jpg" alt="Memory 1">
+        </div>
+
+        <!-- Voice Message Section -->
+        <div id="message" class="hidden section">
+            <button class="voice-btn" onclick="playVoice()">▶ Play My Voice</button>
+            <p class="love-note glow-text">
+                You are my peace. My happiness. My greatest blessing ❤️
+            </p>
+        </div>
+
+        <!-- Distance Section -->
+        <div id="distance" class="hidden section">
+            <div class="sweet-box">
+                <p class="love-note">
+                    They say distance changes feelings.
+                <br><br>
+                Maybe it does.
+                But I believe it only proves which ones were real.
+                <br><br>
+                So if one day you miss me…
+                I hope you come back to this page
+                and remember that what we had
+                was never ordinary.
+                </p>
+            </div>
+        </div>
+
+        <!-- Final Scene Section -->
+        <div id="finalScene" class="hidden section">
+            <div class="sweet-box">
+                <p id="finalText" class="love-note"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== ERROR TOAST ===== -->
+    <div id="errorToast">Try again, cutie ❤️</div>
+
+    <!-- ===== CUSTOM PROMPT MODAL ===== -->
+    <div id="customPrompt">
+        <div class="prompt-content">
+            <h2 id="promptTitle">Question</h2>
+            <input type="text" id="promptInput" placeholder="Tap here to type...">
+            <div class="prompt-btns">
+                <button class="animated-btn" onclick="submitPrompt()">Submit</button>
+                <button class="animated-btn" style="background: linear-gradient(180deg, #8b3456 0%, #7a2c4d 100%); color: white; border: none;" onclick="closePrompt()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        // =================================================================
+        // CONFIGURATION
+        // =================================================================
+        const CONFIG = {
+            startDate: "2022-01-01", // Change to your actual date
+            heartInterval: 800,
+            heartFallDuration: [8, 12], // Slower hearts: 8-12 seconds
+            confettiCount: 80,
+            burstHeartCount: 20,
+            slideshowDuration: 2000, // 2 seconds per photo
+            // VOLUME SETTINGS (0.0 to 1.0)
+            musicVolume: 1,  // Background music volume (100%)
+            voiceVolume: 1   // Voice message volume (150%)
+        };
+
+        // =================================================================
+        // SCROLL TO TOP HELPER
+        // =================================================================
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // =================================================================
+        // ROMANTIC ENTRANCE SEQUENCE
+        // =================================================================
+        function startExperience() {
+            // Fullscreen request
+            const elem = document.documentElement;
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.webkitRequestFullscreen) {
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) {
+                elem.msRequestFullscreen();
+            }
+
+            createBurst();
+            
+            // Hide intro screen
+            document.getElementById("introScreen").style.display = "none";
+            
+            // Start background music with configured volume
+            const bgMusic = document.getElementById("bgMusic");
+            bgMusic.volume = CONFIG.musicVolume;
+            bgMusic.play();
+            
+            // Start the slideshow
+            startSlideshow();
+        }
+
+        // =================================================================
+        // PHOTO SLIDESHOW SYSTEM
+        // =================================================================
+        let currentSlide = 0;
+        let slideshowInterval;
+
+        function startSlideshow() {
+            const slideshow = document.getElementById("photoSlideshow");
+            const images = document.querySelectorAll('.slideshow-image');
+            const totalSlides = images.length;
+
+            // Show slideshow container
+            slideshow.style.display = "flex";
+            setTimeout(() => slideshow.classList.add("show"), 10);
+
+            // Cycle through images
+            slideshowInterval = setInterval(() => {
+                // Hide current image
+                images[currentSlide].classList.remove("active");
+                
+                // Move to next slide
+                currentSlide++;
+                
+                // Check if slideshow is complete
+                if (currentSlide >= totalSlides) {
+                    clearInterval(slideshowInterval);
+                    endSlideshow();
+                    return;
+                }
+                
+                // Show next image
+                images[currentSlide].classList.add("active");
+            }, CONFIG.slideshowDuration);
+        }
+
+        function endSlideshow() {
+            const slideshow = document.getElementById("photoSlideshow");
+            
+            // Smooth fade out
+            slideshow.classList.remove("show");
+            
+            setTimeout(() => {
+                slideshow.style.display = "none";
+                // Show romantic message
+                showRomanticMessage();
+            }, 500);
+        }
+
+        // =================================================================
+        // ROMANTIC MESSAGE POP-UP
+        // =================================================================
+        function showRomanticMessage() {
+            const message = document.getElementById("romanticMessage");
+            message.style.display = "flex";
+            setTimeout(() => message.classList.add("show"), 10);
+        }
+
+        function showMainCard() {
+            const message = document.getElementById("romanticMessage");
+            const card = document.querySelector(".card");
+            
+            // Fade out message
+            message.classList.remove("show");
+            
+            setTimeout(() => {
+                message.style.display = "none";
+                
+                // Show main card with smooth animation
+                card.classList.add("show");
+            }, 500);
+        }
+
+        // =================================================================
+        // HEART SYSTEM (IMPROVED - SLOWER & MORE VISIBLE)
+        // =================================================================
+        function createHeart() {
+            const heartContainer = document.querySelector(".hearts");
+            if (!heartContainer) return;
+
+            const wrapper = document.createElement("div");
+            wrapper.classList.add("heart-wrapper");
+
+            const heart = document.createElement("img");
+            heart.src = "Images/Background/FallingHeart.jpg";
+            heart.classList.add("heart-img");
+
+            const size = Math.random() * 50 + 30; // Larger hearts: 30-80px
+            heart.style.width = size + "px";
+            wrapper.style.left = Math.random() * 100 + "vw";
+
+            // SLOWER fall duration (8-12 seconds)
+            const fallDuration = Math.random() * 
+                (CONFIG.heartFallDuration[1] - CONFIG.heartFallDuration[0]) + 
+                CONFIG.heartFallDuration[0];
+            
+            const swayDuration = Math.random() * 1.5 + 1.5;
+
+            wrapper.style.animationDuration = `${fallDuration}s`;
+            heart.style.animationDuration = `${swayDuration}s`;
+
+            wrapper.appendChild(heart);
+            heartContainer.appendChild(wrapper);
+
+            setTimeout(() => wrapper.remove(), fallDuration * 1000);
+        }
+
+        function createBurst() {
+            for (let i = 0; i < CONFIG.burstHeartCount; i++) {
+                const burst = document.createElement("img");
+                burst.src = "Images/Background/FallingHeart.jpg";
+                burst.classList.add("burst-heart");
+
+                const angle = Math.random() * Math.PI * 2;
+                const distance = Math.random() * 200 + 100;
+                const tx = Math.cos(angle) * distance + "px";
+                const ty = Math.sin(angle) * distance + "px";
+                const rot = Math.random() * 360 + "deg";
+
+                burst.style.setProperty('--tx', tx);
+                burst.style.setProperty('--ty', ty);
+                burst.style.setProperty('--rot', rot);
+                burst.style.width = (Math.random() * 30 + 20) + "px";
+
+                document.body.appendChild(burst);
+                setTimeout(() => burst.remove(), 1500);
+            }
+        }
+
+        // =================================================================
+        // CONFETTI SYSTEM
+        // =================================================================
+        function launchConfetti() {
+            const container = document.querySelector(".confetti-container");
+            for (let i = 0; i < CONFIG.confettiCount; i++) {
+                const conf = document.createElement("div");
+                conf.classList.add("confetti");
+                conf.style.left = Math.random() * 100 + "vw";
+                conf.style.backgroundColor = Math.random() > 0.5 ? "#ff004f" : "#ff5fa2";
+                conf.style.animationDuration = (Math.random() * 3 + 2) + "s";
+                container.appendChild(conf);
+                setTimeout(() => conf.remove(), 5000);
+            }
+        }
+
+        // =================================================================
+        // TYPEWRITER EFFECT
+        // =================================================================
+        function typeLetter(text, elementId, speed = 40) {
+            let i = 0;
+            const el = document.getElementById(elementId);
+            el.innerHTML = "";
+
+            function typing() {
+                if (i < text.length) {
+                    el.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(typing, speed);
+                }
+            }
+            typing();
+        }
+
+        // =================================================================
+        // TIME CALCULATOR
+        // =================================================================
+        function updateTime() {
+            const startDate = new Date(CONFIG.startDate);
+            const now = new Date();
+            const diff = now - startDate;
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+            document.getElementById("timeTogether").innerText =
+                `It's been ${days} days since we started this story ❤️`;
+        }
+
+        // =================================================================
+        // NAVIGATION
+        // =================================================================
+        function showSection(id) {
+            // Scroll to top immediately
+           // scrollToTop();
+            
+            document.getElementById("navButtons").style.display = "none";
+            document.getElementById("backBtn").style.display = "block";
+
+            document.querySelectorAll(".section").forEach(sec => {
+                sec.classList.remove("show");
+                sec.style.display = "none";
+            });
+
+            const target = document.getElementById(id);
+            target.style.display = "block";
+            setTimeout(() => target.classList.add("show"), 10);
+        }
+
+        function goBack() {
+            // Scroll to top immediately
+           // scrollToTop();
+            
+            document.querySelectorAll(".section").forEach(sec => {
+                sec.classList.remove("show");
+                sec.style.display = "none";
+            });
+
+            document.getElementById("navButtons").style.display = "block";
+            document.getElementById("backBtn").style.display = "none";
+
+            // Reset background
+            document.body.style.background = "";
+            document.body.style.transition = "background 1s ease";
+        }
+
+        // =================================================================
+        // FINAL SCENE
+        // =================================================================
+        function finalScene() {
+            // Scroll to top immediately
+           // scrollToTop();
+            
+            showSection("finalScene");
+
+            const text = `If one day…
+Months from now…
+
+You randomly think of me,
+
+I hope you smile.
+
+Not because you regret anything.
+Not because you miss me in a painful way.
+
+But because you remember
+that what we shared was real.
+
+And real things…
+don't just fade away.
+
+They stay.
+Quietly. Gently.
+Somewhere in the heart.
+
+Goodbye for now.
+And if it's God's will…
+maybe one day,
+we'll find our way back to each other again.`;
+
+            typeLetter(text, "finalText", 40);
+
+            document.body.style.transition = "background 3s ease";
+            document.body.style.background = "linear-gradient(180deg, #2b1c24, #1a1015)";
+        }
+
+        // =================================================================
+        // PROMPT MODAL SYSTEM
+        // =================================================================
+        let currentUnlockType = "";
+
+        function openPrompt(question, type) {
+            currentUnlockType = type;
+            document.getElementById("promptTitle").innerText = question;
+            document.getElementById("promptInput").value = "";
+
+            const modal = document.getElementById("customPrompt");
+            document.body.classList.add("prompt-open");
+
+            modal.style.display = "flex";
+            modal.style.opacity = "0";
+            setTimeout(() => modal.style.opacity = "1", 10);
+        }
+
+        function closePrompt() {
+            const modal = document.getElementById("customPrompt");
+            modal.style.opacity = "0";
+            document.body.classList.remove("prompt-open");
+            setTimeout(() => modal.style.display = "none", 400);
+        }
+
+        function submitPrompt() {
+            const answer = document.getElementById("promptInput").value.toLowerCase().trim();
+
+            if (currentUnlockType === "letter") {
+                if (answer === "2008j&d2012") {
+                    showSection("loveLetter");
+                    launchConfetti();
+
+                    const letterText = `My Love,
+
+I knew this day would come eventually,
+but it still feels surreal.
+Knowing I won't be seeing you as often for a while doesn't sit easy with me.
+
+I can only imagine how hard it was to leave your friends and loved ones behind.
+But more than anything, I'm proud of you.
+Proud that you're brave enough to chase something bigger than comfort.
+Proud that you're strong enough to step into a new chapter of your life.
+
+I won't pretend I'm not scared.
+Scared of distance.
+Scared of time.
+Scared of the silence that might try to grow between us.
+
+But fear doesn't get to decide our story.
+
+I don't know exactly what the future holds for us.
+I don't know how long it will be until we see each other again.
+What I do know is that what I feel for you isn't ordinary.
+It's not something I can just replace or ignore.
+
+Even when things didn't always work in our favor,
+even when life didn't give us enough time to fully blossom into everything we could be,
+what we built was real.
+
+You matter to me.
+Not just as a memory.
+Not just as a chapter.
+But as someone I still see in my future.
+
+I'm not here to hold you back.
+I'm here to grow with you, even if that growth happens miles apart for now.
+If long distance is the test, then let it make us stronger, not strangers.
+
+I believe if two people are meant to build something real,
+distance is just a season, not the ending.
+
+So go chase your dreams.
+Go become everything you're meant to be.
+And while you're doing that, know this:
+
+I'm still here.
+Choosing you.
+Believing in us.
+
+And looking forward to the day we close this distance and start the next chapter side by side.
+
+Thank you for loving me.
+Thank you for the memories.
+And thank you for being someone worth fighting for.❤️`;
+
+                    document.getElementById("typedLetter").innerHTML = letterText.replace(/\n/g, '<br>');
+                    closePrompt();
+                } else {
+                    triggerErrorEffect();
+                    showError("Try again ❤️");
+                }
+            } else if (currentUnlockType === "message") {
+                if (answer === "2008j&d2012") {
+                    showSection("message");
+                    launchConfetti();
+                    closePrompt();
+                } else {
+                    triggerErrorEffect();
+                    showError("Wrong answer, cutie 😘");
+                }
+            }
+        }
+
+        function unlockLoveLetter() {
+            openPrompt("???", "letter");
+        }
+
+        function unlockMessage() {
+            openPrompt("???", "message");
+        }
+
+        // =================================================================
+        // ERROR HANDLING
+        // =================================================================
+        function showError(message) {
+            const toast = document.getElementById("errorToast");
+            toast.innerText = message;
+            toast.classList.add("show");
+            setTimeout(() => toast.classList.remove("show"), 2500);
+        }
+
+        function triggerErrorEffect() {
+            const inputField = document.getElementById("promptInput");
+            inputField.classList.add("error-glow");
+            setTimeout(() => inputField.classList.remove("error-glow"), 500);
+        }
+
+        // =================================================================
+        // VOICE PLAYER
+        // =================================================================
+        function playVoice() {
+            const voiceMsg = document.getElementById("voiceMessage");
+            const bgMusic = document.getElementById("bgMusic");
+            
+            // Set voice volume from config
+            voiceMsg.volume = CONFIG.voiceVolume;
+            
+            // Lower background music volume when voice message starts
+            const originalVolume = bgMusic.volume;
+            bgMusic.volume = CONFIG.musicVolume * 0.05; // 20% of music volume
+            
+            // Play voice message
+            voiceMsg.play();
+            
+            // Restore background music volume when voice message ends
+            voiceMsg.onended = function() {
+                bgMusic.volume = originalVolume;
+            };
+        }
+
+        // =================================================================
+        // ENTER KEY SUPPORT
+        // =================================================================
+        document.getElementById("promptInput").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                submitPrompt();
+            }
+        });
+
+        // =================================================================
+        // INITIALIZATION
+        // =================================================================
+        window.onload = function() {
+            updateTime();
+            setInterval(createHeart, CONFIG.heartInterval);
+        };
+    </script>
+</body>
+</html>
